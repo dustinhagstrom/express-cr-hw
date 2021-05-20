@@ -22,20 +22,18 @@ router.get("/get-all-todos", function (req, res) {
 
 router.get("/get-todo-by-id/:id", function (req, res) {
   let isFound = false;
-  let foundTodo;
   todos.forEach(function (item) {
     if (item.id === req.params.id) {
       isFound = true;
-      foundTodo = item;
+      res.json({
+        id: item.id,
+        todo: item.todo,
+        done: item.done,
+      });
     }
   });
 
-  if (isFound) {
-    res.json({
-      id: foundTodo.id,
-      todo: foundTodo.todo,
-    });
-  } else {
+  if (!isFound) {
     res.json({
       message:
         "The Todo ID you are looking for does not exists, please check ID",

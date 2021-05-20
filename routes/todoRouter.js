@@ -17,7 +17,7 @@ let todos = [
 ];
 
 router.get("/get-all-todos", function (req, res) {
-  res.json({ todos });
+  res.json({ payload: todos });
 });
 
 router.get("/get-todo-by-id/:id", function (req, res) {
@@ -53,7 +53,7 @@ router.get("/get-todos-by-done/:boolean", function (req, res) {
       item.done = false;
     }
   });
-  res.json({ newDoneArray });
+  res.json({ payload: newDoneArray });
 });
 
 router.post("/create-new-todo", function (req, res) {
@@ -70,7 +70,7 @@ router.post("/create-new-todo", function (req, res) {
   });
   if (canCreate) {
     todos.push(newTodo);
-    res.json({ todos });
+    res.json({ payload: todos });
   } else {
     res.json({ message: "This todo already exists." });
   }

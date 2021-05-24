@@ -43,17 +43,18 @@ router.get("/get-todo-by-id/:id", function (req, res) {
 
 router.get("/get-todos-by-done/:boolean", function (req, res) {
   let newDoneArray = [];
+  let atLeastOneMatches = false;
   todos.forEach(function (item) {
-    newDoneArray.push(item);
-  });
-  newDoneArray.forEach(function (item) {
-    if (req.params.boolean === "true") {
-      item.done = true;
-    } else {
-      item.done = false;
+    if (req.params.boolean === item.done) {
+      atLeastOneMatches = true;
+      newDoneArray.push(item);
     }
   });
-  res.json({ payload: newDoneArray });
+  if (atLeastOneMatches) {
+    res.json({ payload: newDoneArray });
+  } else {
+    res.json({ message: "We don't have any todos that match!" });
+  }
 });
 
 router.post("/create-new-todo", function (req, res) {
